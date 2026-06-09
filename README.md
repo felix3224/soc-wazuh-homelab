@@ -53,6 +53,7 @@ Serviço de análise de arquivos e IPs maliciosos. Integrado via API ao Shuffle 
 **Objetivo:** Simular ataque de força bruta na porta RDP (3389) do Windows 10 e validar se o Wazuh detecta as múltiplas tentativas de autenticação falha.  
 **Regras acionadas:** Wazuh Rule ID `60106`, `60122` (Windows authentication failures)
 
+
 ```bash
 # Exemplo de ataque com Hydra (Kali)
 hydra -l administrator -P /usr/share/wordlists/rockyou.txt rdp://<IP-WINDOWS>
