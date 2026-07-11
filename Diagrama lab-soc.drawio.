@@ -1,0 +1,133 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="Lbe8StxRlK4eeQfb_4B6">
+    <mxGraphModel dx="1044" dy="716" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-26" edge="1" parent="1" source="Gvu8w5o4HmDd4VtfjnQn-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=link;" target="Gvu8w5o4HmDd4VtfjnQn-9" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-27" connectable="0" parent="Gvu8w5o4HmDd4VtfjnQn-26" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1. Enviar Eventos" vertex="1">
+          <mxGeometry relative="1" x="0.2476" y="-3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-7" parent="1" style="fontColor=#0066CC;verticalAlign=top;verticalLabelPosition=bottom;labelPosition=center;align=center;html=1;outlineConnect=0;fillColor=#CCCCCC;strokeColor=#6881B3;gradientColor=none;gradientDirection=north;strokeWidth=2;shape=mxgraph.networks.pc;" value="Win 11 Client&lt;div&gt;Wazuh Agent&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="100" x="350" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-25" edge="1" parent="1" source="Gvu8w5o4HmDd4VtfjnQn-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=link;" target="Gvu8w5o4HmDd4VtfjnQn-17" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-9" parent="1" style="points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;fillColor=#FF6A00;strokeColor=none;shape=mxgraph.alibaba_cloud.router;" value="" vertex="1">
+          <mxGeometry height="57.599999999999994" width="55.2" x="372.4" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-32" edge="1" parent="1" source="Gvu8w5o4HmDd4VtfjnQn-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=link;fillColor=#60a917;strokeColor=#2D7600;" target="Gvu8w5o4HmDd4VtfjnQn-17" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-36" connectable="0" parent="Gvu8w5o4HmDd4VtfjnQn-32" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="4. Enrich IOCS" vertex="1">
+          <mxGeometry relative="1" x="0.1255" y="2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-37" edge="1" parent="1" source="Gvu8w5o4HmDd4VtfjnQn-11" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#1ba1e2;strokeColor=#006EAF;shape=link;" target="Gvu8w5o4HmDd4VtfjnQn-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-38" connectable="0" parent="Gvu8w5o4HmDd4VtfjnQn-37" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="5. Enviar Alerts" vertex="1">
+          <mxGeometry relative="1" x="-0.0642" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-39" edge="1" parent="1" source="Gvu8w5o4HmDd4VtfjnQn-11" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0;entryDx=0;entryDy=0;shape=link;fillColor=#f0a30a;strokeColor=#BD7000;" target="Gvu8w5o4HmDd4VtfjnQn-17" value="z">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-40" connectable="0" parent="Gvu8w5o4HmDd4VtfjnQn-39" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="6. Enviar Email" vertex="1">
+          <mxGeometry relative="1" x="-0.0241" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-46" edge="1" parent="1" source="Gvu8w5o4HmDd4VtfjnQn-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#e51400;strokeColor=#B20000;shape=link;" target="Gvu8w5o4HmDd4VtfjnQn-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-48" connectable="0" parent="Gvu8w5o4HmDd4VtfjnQn-46" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="8. Enviar ação de Resposta&amp;nbsp;" vertex="1">
+          <mxGeometry relative="1" x="0.3737" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-11" parent="1" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/internet_cloud.svg;" value="Shuffle" vertex="1">
+          <mxGeometry height="61.5" width="97.62" x="350" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-28" edge="1" parent="1" source="Gvu8w5o4HmDd4VtfjnQn-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=link;" target="Gvu8w5o4HmDd4VtfjnQn-18" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-29" connectable="0" parent="Gvu8w5o4HmDd4VtfjnQn-28" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="2. Receber Events&amp;nbsp;" vertex="1">
+          <mxGeometry relative="1" x="0.1275" y="-1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-41" edge="1" parent="1" source="Gvu8w5o4HmDd4VtfjnQn-17" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=link;fillColor=#f0a30a;strokeColor=#BD7000;" target="Gvu8w5o4HmDd4VtfjnQn-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-42" connectable="0" parent="Gvu8w5o4HmDd4VtfjnQn-41" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="7. Enviar e Receber Emaiil" vertex="1">
+          <mxGeometry relative="1" x="-0.0395" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-45" edge="1" parent="1" source="Gvu8w5o4HmDd4VtfjnQn-17" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;shape=link;fillColor=#e51400;strokeColor=#B20000;" target="Gvu8w5o4HmDd4VtfjnQn-11">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="360" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-17" parent="1" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/internet_cloud.svg;" value="internet" vertex="1">
+          <mxGeometry height="61.5" width="97.62" x="351.19" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-30" edge="1" parent="1" source="Gvu8w5o4HmDd4VtfjnQn-18" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=1;entryDx=0;entryDy=0;shape=link;fillColor=#1ba1e2;strokeColor=#006EAF;" target="Gvu8w5o4HmDd4VtfjnQn-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-31" connectable="0" parent="Gvu8w5o4HmDd4VtfjnQn-30" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="3. Enviar Alerts" vertex="1">
+          <mxGeometry relative="1" x="0.0261" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-49" edge="1" parent="1" source="Gvu8w5o4HmDd4VtfjnQn-18" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=link;fillColor=#e51400;strokeColor=#B20000;" target="Gvu8w5o4HmDd4VtfjnQn-7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="179" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-50" connectable="0" parent="Gvu8w5o4HmDd4VtfjnQn-49" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="8. Performar ação de Resposta&amp;nbsp;" vertex="1">
+          <mxGeometry relative="1" x="-0.3095" y="-2" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-18" parent="1" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/internet_cloud.svg;" value="Wazuh Manager" vertex="1">
+          <mxGeometry height="61.5" width="97.62" x="130" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-19" parent="1" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/internet_cloud.svg;" value="The-Hive" vertex="1">
+          <mxGeometry height="61.5" width="97.62" x="572.38" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-43" edge="1" parent="1" source="Gvu8w5o4HmDd4VtfjnQn-21" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=link;fillColor=#e51400;strokeColor=#B20000;" target="Gvu8w5o4HmDd4VtfjnQn-17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="429" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-44" connectable="0" parent="Gvu8w5o4HmDd4VtfjnQn-43" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="8. Enviar ação de Resposta&amp;nbsp;" vertex="1">
+          <mxGeometry relative="1" x="-0.1533" y="3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Gvu8w5o4HmDd4VtfjnQn-21" parent="1" style="fontColor=#0066CC;verticalAlign=top;verticalLabelPosition=bottom;labelPosition=center;align=center;html=1;outlineConnect=0;fillColor=#CCCCCC;strokeColor=#6881B3;gradientColor=none;gradientDirection=north;strokeWidth=2;shape=mxgraph.networks.pc;" value="SOC Analyst&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="70" width="100" x="670" y="393.8" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
