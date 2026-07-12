@@ -11,7 +11,7 @@ Laboratório prático de SOC (Security Operations Center) utilizando **Wazuh** c
 │                      HOME LAB                           │
 │                                                         │
 │  ┌──────────────┐    ┌──────────────┐    ┌───────────┐  │
-│  │  Wazuh OVA   │◄──►│  Windows 10  │    │Kali Linux │  │
+│  │     Wazuh    │◄──►│  Windows 11  │    │Kali Linux │  │
 │  │  (SIEM/EDR)  │    │ (Wazuh Agent)│◄───│ (Atacante)│  │
 │  └──────┬───────┘    └──────────────┘    └───────────┘  │
 │         │                                               │
@@ -27,8 +27,10 @@ Laboratório prático de SOC (Security Operations Center) utilizando **Wazuh** c
 
 | VM | Função | SO |
 |----|--------|----|
-| **Wazuh OVA** | Servidor SIEM/EDR — coleta, correlaciona e analisa logs | Ubuntu (OVA oficial) |
-| **Windows 10** | Endpoint monitorado — roda o Wazuh Agent | Windows 10 |
+| **Wazuh** | Servidor SIEM/EDR — coleta, correlaciona e analisa logs | Ubuntu 22.04 lts |
+| **TheHIve** | Servidor SIEM/EDR — coleta, correlaciona e analisa logs | Ubuntu 22.04 lts |
+| **Shuffle** | Servidor SIEM/EDR — coleta, correlaciona e analisa logs | Ubuntu 22.04 lts |
+| **Windows 11** | Endpoint monitorado — roda o Wazuh Agent | Windows 11 |
 | **Kali Linux** | Máquina do atacante — executa os testes de intrusão | Kali Linux |
 
 ---
@@ -50,7 +52,7 @@ Serviço de análise de arquivos e IPs maliciosos. Integrado via API ao Shuffle 
 
 ### Teste 1 — Brute Force em RDP (Windows)
 **Ferramenta:** Hydra / Crowbar (Kali Linux)  
-**Objetivo:** Simular ataque de força bruta na porta RDP (3389) do Windows 10 e validar se o Wazuh detecta as múltiplas tentativas de autenticação falha.  
+**Objetivo:** Simular ataque de força bruta na porta RDP (3389) do Windows 11 e validar se o Wazuh detecta as múltiplas tentativas de autenticação falha.  
 **Regras acionadas:** Wazuh Rule ID `60106`, `60122` (Windows authentication failures)
 
 
