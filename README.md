@@ -1,181 +1,112 @@
-# 🛡️ SOC Wazuh Homelab
+# SOC Automation Lab: Detecção e Resposta Automatizada a Ameaças
+### Arquitetura Integrada: Sysmon ➔ Wazuh (SIEM) ➔ Shuffle (SOAR) ➔ VirusTotal API ➔ TheHive (IR) & ProtonMail
 
-Laboratório prático de SOC (Security Operations Center) utilizando **Wazuh** como SIEM/EDR, integrado com **Shuffle** e **VirusTotal** para automação de resposta a incidentes. O ambiente simula ameaças reais com Kali Linux e monitora endpoints Windows com agente Wazuh.
+<div align="center">
 
----
-
-## 🧱 Arquitetura do Ambiente
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                      HOME LAB                           │
-│                                                         │
-│  ┌──────────────┐    ┌──────────────┐    ┌───────────┐  │
-│  │     Wazuh    │◄──►│  Windows 11  │    │Kali Linux │  │
-│  │  (SIEM/EDR)  │    │ (Wazuh Agent)│◄───│ (Atacante)│  │
-│  └──────┬───────┘    └──────────────┘    └───────────┘  │
-│         │                                               │
-│         ▼                                               │
-│  ┌──────────────┐    ┌──────────────┐                   │
-│  │   Shuffle    │───►│  VirusTotal  │                   │
-│  │  (SOAR/Auto) │    │    (API)     │                   │
-│  └──────────────┘    └──────────────┘                   │
-└─────────────────────────────────────────────────────────┘
-```
-
-### Máquinas Virtuais
-
-| VM | Função | SO |
-|----|--------|----|
-| **Wazuh** | Servidor SIEM/EDR — coleta, correlaciona e analisa logs | Ubuntu 22.04 lts |
-| **TheHIve** | Servidor SIEM/EDR — coleta, correlaciona e analisa logs | Ubuntu 22.04 lts |
-| **Shuffle** | Servidor SIEM/EDR — coleta, correlaciona e analisa logs | Ubuntu 22.04 lts |
-| **Windows 11** | Endpoint monitorado — roda o Wazuh Agent | Windows 11 |
-| **Kali Linux** | Máquina do atacante — executa os testes de intrusão | Kali Linux |
+![Azure](https://img.shields.io/badge/Cloud-Microsoft%20Azure-0089D6?style=flat&logo=microsoftazure&logoColor=white)
+![VirtualBox](https://img.shields.io/badge/Hypervisor-VirtualBox-183A61?style=flat&logo=virtualbox&logoColor=white)
+![SO](https://img.shields.io/badge/Platform-Windows%2011%20%7C%20Ubuntu-blue)
+![SIEM](https://img.shields.io/badge/SIEM-Wazuh-orange)
+![SOAR](https://img.shields.io/badge/SOAR-Shuffle-1abc9c)
+![IR](https://img.shields.io/badge/IR-TheHive-yellow)
+![MITRE](https://img.shields.io/badge/MITRE%20ATT%26CK-T1003-red)
+ 
+</div>
 
 ---
 
-## 🔗 Ferramentas & Integrações
+## 📌 Visão Geral do Projeto
+Este projeto documenta a implementação de um laboratório de **Automação de SOC (Security Operations Center)** focado na detecção e mitigação de ataques de **Credential Dumping** em tempo real. O principal objetivo foi criar um ecossistema integrado que automatiza o ciclo de vida completo de um incidente (coleta de telemetria, correlação de eventos, enriquecimento de indicadores, abertura de casos e notificação crítica), reduzindo drasticamente o tempo de resposta (MTTR) e mitigando a fadiga de alertas (*Alert Fatigue*) dos analistas de segurança.
 
-### [Wazuh](https://wazuh.com/)
-SIEM/EDR open-source que centraliza logs dos endpoints, gera alertas baseados em regras e permite resposta ativa. Neste lab, o servidor roda via OVA e o agente fica instalado no Windows 10.
-
-### [Shuffle](https://shuffler.io/)
-Plataforma SOAR (Security Orchestration, Automation and Response) que automatiza os fluxos de trabalho gerados pelos alertas do Wazuh. Quando um alerta é disparado, o Shuffle aciona a API do VirusTotal automaticamente.
-
-### [VirusTotal](https://www.virustotal.com/)
-Serviço de análise de arquivos e IPs maliciosos. Integrado via API ao Shuffle para enriquecer os alertas do Wazuh com reputação de IPs e hashes automaticamente.
+O cenário simula a execução do utilitário malicioso **Mimikatz.exe** em um host corporativo Windows 11, desencadeando um fluxo automatizado de resposta orquestrada.
 
 ---
 
-## 🧪 Cenários de Teste
+## 🏗️ 1. Arquitetura do Laboratório e Fluxo de Dados
+O ecossistema foi projetado para garantir que os dados de eventos fluam de forma contínua e assíncrona entre as camadas de Endpoint, SIEM, SOAR e plataformas de gerenciamento.
 
-### Teste 1 — Brute Force em RDP (Windows)
-**Ferramenta:** Hydra / Crowbar (Kali Linux)  
-**Objetivo:** Simular ataque de força bruta na porta RDP (3389) do Windows 11 e validar se o Wazuh detecta as múltiplas tentativas de autenticação falha.  
-**Regras acionadas:** Wazuh Rule ID `60106`, `60122` (Windows authentication failures)
-
-
-```bash
-# Exemplo de ataque com Hydra (Kali)
-hydra -l administrator -P /usr/share/wordlists/rockyou.txt rdp://<IP-WINDOWS>
-```
+![1. Diagrama Soc-Lab](imagens/diagrama_soc_lab.png)
+*Diagrama de arquitetura de rede e fluxo de dados do ecossistema de SOC, ilustrando a jornada da telemetria desde o endpoint até as camadas de detecção (SIEM), automação (SOAR), inteligência de ameaças e gerenciamento de incidentes.*
 
 ---
 
-### Teste 2 — FIM (File Integrity Monitoring)
-**Ferramenta:** Wazuh Agent (Windows)  
-**Objetivo:** Monitorar alterações em arquivos e diretórios críticos do Windows. Qualquer criação, modificação ou deleção em pastas sensíveis gera um alerta no dashboard do Wazuh.  
-**Configuração:** `ossec.conf` no agente com diretórios monitorados via `<directories check_all="yes">`.
+## 🛠️ Tecnologias Utilizadas e seus roles
 
-```xml
-<!-- ossec.conf no agente Windows -->
-<syscheck>
-  <directories check_all="yes">C:\Users\Administrator\Desktop</directories>
-  <directories check_all="yes">C:\Windows\System32</directories>
-</syscheck>
-```
+
+| Camada | Ferramenta | Função |
+|---|---|---|
+| Endpoint | Windows 11 + Sysmon | Telemetria de processos em tempo real no endpoint |
+| SIEM | Wazuh | Correlação de eventos e engenharia de detecção |
+| SOAR | Shuffle | Orquestração do workflow de resposta |
+| Threat Intel | VirusTotal API v3 | Enriquecimento de IOC (hash SHA-256) |
+| IR | TheHive | Plataforma para IR (Resposta a Incidentes) estruturada para triagem e auditoria. |
+| Notificação | ProtonMail | Alerta em tempo real ao analista |
+---
+
+## 🔬 2. Execução do Ataque e Telemetria do Endpoint
+O gatilho do incidente inicia-se com a simulação do adversário executando ações táticas de extração de credenciais no host Windows 11.
+
+![2. Sysmon e PowerShell](imagens/sysmon_powershell.png)
+*Execução controlada do utilitário malicioso `mimikatz.exe` (Credential Dumping) no host Windows 11, capturada instantaneamente pelo Sysmon através do evento de criação de processo em tempo real (Event ID 1).*
 
 ---
 
-### Teste 3 — Bloqueio Automático de IP por Brute Force
-**Ferramenta:** Wazuh Active Response  
-**Objetivo:** Configurar uma regra que bloqueia automaticamente o IP de origem após um número definido de tentativas falhas de autenticação, usando o recurso de Active Response do Wazuh.  
-**Mecanismo:** `firewall-drop` command no Wazuh + regra personalizada de threshold.
+## 🎯 3. Engenharia de Detecção e Centralização (SIEM)
+A transformação do log bruto do Sysmon em um alerta de segurança acionável foi realizada por meio do desenvolvimento de lógicas customizadas baseadas em assinaturas do binário e mapeadas para frameworks globais.
 
-```xml
-<!-- ossec.conf no servidor Wazuh -->
-<active-response>
-  <command>firewall-drop</command>
-  <location>local</location>
-  <rules_id>60122</rules_id>
-  <timeout>600</timeout>
-</active-response>
-```
+### Regra Customizada (`local_rules.xml`)
+![3.1 Wazuh regra criada](imagens/wazuh_regra.png)
+*Regra customizada de Engenharia de Detecção estruturada em XML (ID `100002`, Nível 15) dentro do Wazuh Manager, projetada para validar assinaturas de processo baseadas no campo `originalFileName` do binário malicioso e mapeada ao framework MITRE ATT&CK.*
 
----
+### Consolidação dos Alertas no Dashboard
+![3.2 Wazuh dashboard](imagens/wazuh_dashboard.png)
+*Visão analítica do painel do Wazuh exibindo a volumetria e a consolidação dos alertas críticos gerados em tempo real após o gatilho da atividade adversária no endpoint.*
 
-## 🔄 Fluxo de Automação (Shuffle + VirusTotal)
-
-```
-Wazuh Alert disparado
-        │
-        ▼
-  Webhook → Shuffle
-        │
-        ▼
-  Extrai IP do alerta
-        │
-        ▼
-  Consulta VirusTotal API
-        │
-        ▼
-  IP Malicioso? ──► Sim ──► Cria relatório / Notificação
-        │
-        Não
-        │
-        ▼
-     Log registrado
-```
+### Integração Nativa via Webhook (`ossec.conf`)
+![3.3 Wazuh integração com o shuffle](imagens/wazuh_ossec.png)
+*Arquivo de configuração global do Wazuh (`ossec.conf`) demonstrando o bloco de integração nativa configurado para encaminhar os dados JSON dos alertas específicos via webhook para a plataforma de orquestração.*
 
 ---
 
-## 🚀 Como Reproduzir
+## ⚡ 4. Orquestração e Enriquecimento Automático (SOAR)
+O coração da automação reside no **Shuffle SOAR**, que recebe o payload do Wazuh, isola o hash criptográfico (SHA-256) do processo suspeito e realiza o enriquecimento do Indicador de Comprometimento (IOC).
 
-### 1. Subir o Servidor Wazuh
-- Baixe a [OVA oficial do Wazuh](https://documentation.wazuh.com/current/deployment-options/virtual-machine/virtual-machine.html)
-- Importe no VirtualBox ou VMware
-- Acesse o dashboard: `https://<IP-WAZUH>` (usuário: `admin`)
+![4. Shuffle automação](imagens/shuffle_workflow.png)
+*Workflow de automação e resposta a incidentes estruturado no Shuffle (SOAR), exibindo a execução bem-sucedida em cascata de todas as etapas (ingestão do log, extração de metadados, consultas externas e notificações).*
 
-### 2. Instalar o Agente no Windows 10
-```powershell
-# No Windows 10, via PowerShell (admin)
-Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.x.x-1.msi -OutFile wazuh-agent.msi
-msiexec.exe /i wazuh-agent.msi WAZUH_MANAGER="<IP-WAZUH>" /q
-NET START WazuhSvc
-```
-
-### 3. Configurar Shuffle
-- Deploy via Docker ou conta em [shuffler.io](https://shuffler.io)
-- Criar workflow com trigger via Wazuh webhook
-- Adicionar ação de consulta à API do VirusTotal
-
-### 4. Configurar chave da API VirusTotal
-- Criar conta gratuita em [virustotal.com](https://www.virustotal.com)
-- Gerar API Key e inserir no workflow do Shuffle
+### Consulta de Cyber Threat Intelligence (VirusTotal v3)
+![5. VirusTotal hash](imagens/virustotal_json.png)
+*Retorno estruturado (Payload JSON) com Status `200 Ok` gerado pela API do VirusTotal v3 integrada ao Shuffle, confirmando a identificação e reputação maliciosa do hash SHA-256 extraído do incidente.*
 
 ---
 
-## 📁 Estrutura do Repositório
+## 🚨 5. Triagem de Incidentes e Notificação Crítica
+Uma vez verificado o veredito malicioso do IOC, o SOAR popula o sistema de resposta a incidentes de forma estruturada e paralelamente notifica o analista de plantão por canais externos.
 
-```
-soc-wazuh-homelab/
-├── README.md
-├── configs/
-│   ├── ossec-server.conf       # Configuração do servidor Wazuh
-│   ├── ossec-agent.conf        # Configuração do agente Windows
-│   └── active-response.conf    # Regras de resposta ativa
-├── rules/
-│   └── custom-rules.xml        # Regras personalizadas Wazuh
-├── shuffle/
-│   └── workflow-virustotal.json # Exportação do workflow Shuffle
-└── screenshots/
-    ├── brute-force-alert.png
-    ├── fim-alert.png
-    └── ip-blocked.png
-```
+### Console de Incident Response (TheHive)
+![6. TheHive](imagens/thehive_alerts.png)
+*Console de gerenciamento de incidentes do TheHive consolidando o alerta, contendo metadados enriquecidos como a severidade do evento, referências cruzadas de ID, status inicial de triagem e a respectiva tag do MITRE ATT&CK.*
+
+### Notificação Direta ao Analista (E-mail App)
+![7. Alerta chegou no email](imagens/email_alerta.png)
+*Notificação crítica e instantânea enviada de forma automatizada pelo SOAR à caixa de entrada do analista de SOC (ProtonMail), contendo os detalhes contextuais da ameaça para tomada de decisão ágil e resposta ao incidente.*
 
 ---
 
+## 📈 Resultados e Aprendizados Técnicos
+* **Mitigação de Alert Fatigue:** A automação filtrou, extraiu e consultou o hash de forma autônoma. O analista recebe apenas o caso pronto e enriquecido, reduzindo o tempo gasto em tarefas repetitivas.
+* **Mapeamento MITRE ATT&CK:** Alinhamento técnico do monitoramento com as táticas globais de adversários, garantindo que o alerta chegue indexado sob a técnica **T1003 (Credential Dumping)**.
+* **Arquitetura Orientada a APIs:** Forte aprendizado prático na modelagem e manipulação de payloads JSON, uso de Webhooks e consumo de APIs RESTful estruturadas em ambientes de segurança de alta performance.
+
+---
+ 
+## 🛠️ Stack
+ 
+`Windows 11` `Sysmon` `Azure[vm/vnet]` `Wazuh` `Shuffle` `VirusTotal API v3` `TheHive` `ProtonMail`
+ 
+---
+ 
 ## 📚 Referências
-
-- [Documentação Wazuh](https://documentation.wazuh.com/)
-- [Shuffle Documentation](https://shuffler.io/docs)
-- [VirusTotal API](https://developers.virustotal.com/reference)
-- [Wazuh Active Response](https://documentation.wazuh.com/current/user-manual/capabilities/active-response/)
-
----
-
-## 📄 Licença
-
-MIT License — veja o arquivo [LICENSE](LICENSE) para detalhes.
+ 
+Projeto inspirado no [SOC Automation Lab do MyDFIR](https://youtu.be/f18isDfMIlY?si=_KLKDAnL8W236QNe), adaptado e documentado com arquitetura, regras e workflow próprios.
+ 
